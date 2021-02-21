@@ -56,6 +56,10 @@ jobs:
         if: github.event_name == 'push'
         run: terraform plan --detailed-exitcode -no-color
 
+      - name: Generate outputs.tf
+        if: github.event_name == 'push'
+        run: terraform-bin output -json > outputs.json
+
       - name: Wait for App of Apps
         if: github.event_name == 'push'
         uses: docker://argoproj/argocd:v1.7.12
